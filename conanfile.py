@@ -21,7 +21,6 @@ class TdlibConan(ConanFile):
     def build(self):
         print("self.dir_bld(): %s" % self.dir_bld())
         print("self.dir_src(): %s" % self.dir_src())
-        print("openssl: %s" % self.deps_cpp_info["OpenSSL"])
         cmake = CMake(self)
         cmake.definitions["CMAKE_VERBOSE_MAKEFILE"] = True
         cmake.definitions["OPENSSL_ROOT_DIR"] = self.deps_cpp_info["OpenSSL"].rootpath
@@ -34,7 +33,6 @@ class TdlibConan(ConanFile):
         cmake = CMake(self)
         cmake.configure(source_folder=self.dir_src(), cache_build_folder=self.dir_bld())
         cmake.install()
-        self.copy("libtdc.a", src=self.dir_bld(), dst="lib")
 
     def package_info(self):
         # TODO: windows and osx
@@ -42,7 +40,6 @@ class TdlibConan(ConanFile):
         # reversed order of dependency found in file lib/cmake/Td/TdTargets.cmake 
         # in install directory
         self.cpp_info.libs = [
-            "libtdc.a", # where sym checkAuthenticationPassword ?
             "libtdjson_static.a",
             "libtdjson_private.a",
             "libtdclient.a",
