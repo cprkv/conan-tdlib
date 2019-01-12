@@ -11,7 +11,8 @@ class TdlibConan(ConanFile):
     description = "conan tdlib package"
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    exports_sources = "td-1.3.0%s*" % os.sep
+    folder_version = version
+    exports_sources = "td-%s%s*" % (folder_version, os.sep)
     requires = "OpenSSL/1.0.2n@conan/stable", "zlib/1.2.11@conan/stable"
 
     def configure(self):
@@ -53,6 +54,9 @@ class TdlibConan(ConanFile):
             "dl",
             "pthread",
         ]
+        self.cpp_info.cppflags = [
+            "-D_GLIBCXX_USE_CXX11_ABI=1",
+        ]
         # if self.settings.os == "Linux":
         #     self.cpp_info.libs.extend(["dl", "m"])
 
@@ -60,7 +64,7 @@ class TdlibConan(ConanFile):
         try:
             return self.src_full_path
         except:
-            self.src_full_path = "%s%std-1.3.0" % (self.source_folder, os.sep)
+            self.src_full_path = "%s%std-%s" % (self.source_folder, os.sep, self.folder_version)
             return self.src_full_path
 
     def dir_bld(self):

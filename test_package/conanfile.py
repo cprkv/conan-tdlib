@@ -8,6 +8,9 @@ class TestConanPackage(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.definitions["CMAKE_VERBOSE_MAKEFILE"] = True
+        cmake.definitions["CMAKE_CXX_STANDARD"] = 14
+        cmake.definitions["CMAKE_CXX_STANDARD_REQUIRED"] = True
+        cmake.definitions["CMAKE_CXX_EXTENSIONS"] = False
         cmake.configure()
         cmake.build()
 
