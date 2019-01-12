@@ -40,23 +40,38 @@ class TdlibConan(ConanFile):
 
         # reversed order of dependency found in file lib/cmake/Td/TdTargets.cmake 
         # in install directory
-        self.cpp_info.libs = [
-            "libtdjson_static.a",
-            "libtdjson_private.a",
-            "libtdclient.a",
-            "libtdcore.a",
-            "libtddb.a",
-            "libtdsqlite.a",
-            "libtdnet.a",
-            "libtdactor.a",
-            "libtdutils.a",
-            "m",
-            "dl",
-            "pthread",
-        ]
-        self.cpp_info.cppflags = [
-            "-D_GLIBCXX_USE_CXX11_ABI=1",
-        ]
+        if self.settings.os != "Linux":
+            self.cpp_info.libs = [
+                "tdjson_static",
+                "tdjson_private",
+                "tdclient",
+                "tdcore",
+                "tddb",
+                "tdsqlite",
+                "tdnet",
+                "tdactor",
+                "tdutils",
+                "Mswsock",
+                "Normaliz",
+            ]
+        else:
+            self.cpp_info.libs = [
+                "libtdjson_static.a",
+                "libtdjson_private.a",
+                "libtdclient.a",
+                "libtdcore.a",
+                "libtddb.a",
+                "libtdsqlite.a",
+                "libtdnet.a",
+                "libtdactor.a",
+                "libtdutils.a",
+                "m",
+                "dl",
+                "pthread",
+            ]
+            self.cpp_info.cppflags = [
+                "-D_GLIBCXX_USE_CXX11_ABI=1",
+            ]
         # if self.settings.os == "Linux":
         #     self.cpp_info.libs.extend(["dl", "m"])
 
